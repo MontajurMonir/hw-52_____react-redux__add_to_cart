@@ -62,7 +62,7 @@ useEffect(()=>{
                       badgeText={`${item.discountPercentage}%`}
                       productImg={item.thumbnail}
                       productText={item.title} 
-                      productPrice={`$${item.price}`}
+                      productPrice={item.price}
                       
                       />
                       </div>

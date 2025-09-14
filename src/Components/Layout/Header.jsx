@@ -154,10 +154,10 @@ const Header = () => {
                     <ul className="flex justify-between pt-2 text-white  ">
                         <>
                           <li className="w-[150px]">{item.title}</li>
-                          <li>{item.price} </li>
+                          <li>${item.price} </li>
                           <li><img src={item.img} alt="" className="h-10"/></li>
                           <li>{item.quantity}</li>
-                          <li>{item.price * item.quantity}</li>
+                          <li>${item.price * item.quantity}</li>
 
                         </>
                     </ul>

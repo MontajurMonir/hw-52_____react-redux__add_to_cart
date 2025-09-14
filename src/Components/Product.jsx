@@ -62,7 +62,7 @@ const Product = ({
         >
           {productText}
           <span className={`font-normal text-[16px] text-[#767676] `}>
-            {productPrice}
+            ${productPrice}
           </span>
         </h4>
         <Heading
