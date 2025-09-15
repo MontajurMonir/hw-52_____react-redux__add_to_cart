@@ -10,7 +10,7 @@ import { FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 
-const Header = () => {
+const Header = ({searchQuery, onSearchChange}) => {
   const [showCategory, setCategory] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dropdownRef = useRef(null);
@@ -35,9 +35,27 @@ const Header = () => {
   }, []);
 
   const handleShowCart = () => {
+
     setShowCart(!showCart);
   };
   let data = useSelector((state) => state.cart.value);
+
+  //  const grandTotal = data.reduce((accumulator, currentItem) => {
+  //   // Add the total price of the current item to the accumulator
+  //   return accumulator + (currentItem.price * currentItem.quantity);
+  // }, 0); // The '0' is the starting value for the accumulator
+
+  const grandTotal = data.reduce((Total,currentItem)=>{
+    return Total + (currentItem.price * currentItem.quantity)
+  },0)
+
+
+  
+
+
+  // console.log(grandTotal);
+  
+
   return (
     <>
       <div>
@@ -128,6 +146,8 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder="Search Product"
+                  value={searchQuery}
+                  onChange={onSearchChange}
                   className="p-3 bg-white w-[500px] border-none outline-0"
                 />
                 <IoSearchOutline className="absolute right-3 top-1/2 -translate-y-1/2 text-2xl" />
@@ -140,31 +160,35 @@ const Header = () => {
                   </div>
                   <FaShoppingCart onClick={handleShowCart} />
                 </Flex>
-                {showCart && (
-                  <div className="bg-neutral-400 p-3 w-[600px] absolute right-0 top-[110%]">
+                {showCart &&  (
+                  <div className="bg-neutral-400 p-3 w-[600px] absolute right-0 top-[110%] ">
                     <RxCross2 onClick={() => setShowCart(!showCart)} />
-                    <ul className="flex justify-between pt-2 text-white border-b-2 border-white">
-                      <li className="w-[150px]">Title</li>
-                      <li>price</li>
-                      <li>Image</li>
+                    <ul className="flex justify-between pt-2 text-white text-[16px] border-b-2 border-white">
+                      <li className="w-[170px]">Title</li>
+                      <li className="pl-4">price</li>
+                      <li className="pl-5">Image</li>
                       <li>Quantity</li>
                       <li>Total</li>
                     </ul>
-                      {data.map((item) => (
-                    <ul className="flex justify-between pt-2 text-white  ">
-                        <>
-                          <li className="w-[150px]">{item.title}</li>
-                          <li>${item.price} </li>
-                          <li><img src={item.img} alt="" className="h-10"/></li>
-                          <li>{item.quantity}</li>
-                          <li>${item.price * item.quantity}</li>
-
-                        </>
-                    </ul>
-                      ))}
+                    {data.map((item) => (
+                      <>
+                        
+                          <ul className="flex justify-between pt-2 text-white text-[14px] ">
+                            <li className="w-[160px]">{item.title}</li>
+                            <li>${item.price} </li>
+                            <li>
+                              <img src={item.img} alt="" className="h-10" />
+                            </li>
+                            <li>{item.quantity}</li>
+                            <li>${item.price * item.quantity}</li>
+                          </ul>
+                       
+                      </>
+                    ))}
+                    <div className=" text-black text-[18px] pt-2 gap-x-2 flex items-center justify-end ">Total : <span>${grandTotal.toFixed(2)}</span></div>
                   </div>
                 )}
-                <div className=""></div>
+               
               </div>
             </Flex>
           </Container>
